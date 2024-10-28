@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "科学上网注册与使用 ChatGPT"
-categories: Blog
-tags:  Blog Raft 一致性协议
+title:  "Raft与PacificA对比"
+categories: 一致性协议
+tags:  分布式 Raft 一致性协议
 author: nins
 ---
 
@@ -42,7 +42,8 @@ author: nins
 3. Raft协议不需要manager。当集群中节点数量很多时，manager与节点间的心跳、配置同步等机制会消耗大量的资源、导致manager成为集群的瓶颈。由于Raft不需要manager，可以规避大集群导致的manager瓶颈问题。
 
 # 对比
-|                      | PacificA                                                     | **Raft**                                                     |
+（tips: markdown表格 https://markdown.com.cn/extended-syntax/tables.html）
+|                      | **PacificA**                                            | **Raft**                                                     |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | **选主模式**         | 由 meta（configuration manager）直接指定 Replica 成为 primary，相比 raft 省去了投票选主的过程。meta 的选主由外部 Zookeeper 保证。 | 在节点频繁故障的情况下，选举过程（包括投票选主失败）可能会导致较长的故障恢复时间。 |
 | **多于半数节点宕机** | 通过租约机制和三路数据复制，即使在多于 50%的节点故障的情况下仍能提供服务。 | 多于 50%的节点宕机会导致投票无法成功，系统整体不可用。       |
